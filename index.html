@@ -1,0 +1,635 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1.0" />
+<title>Zachary Barandino — Mechatronics Engineering</title>
+<meta name="description" content="Zachary Barandino — Mechatronics Engineering at the University of Waterloo. Machine vision, precision tooling, embedded systems, and mechanism design." />
+
+<!-- Type: Bricolage Grotesque (display), Hanken Grotesk (body), DM Mono (annotation/labels) -->
+<link rel="preconnect" href="https://fonts.googleapis.com" />
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+<link href="https://fonts.googleapis.com/css2?family=Bricolage+Grotesque:opsz,wght@12..96,500;12..96,600;12..96,700;12..96,800&family=DM+Mono:wght@400;500&family=Hanken+Grotesk:wght@400;500;600&display=swap" rel="stylesheet" />
+
+<style>
+:root{
+  --paper:#EEEDE7;        /* concrete */
+  --paper-2:#E7E5DD;
+  --ink:#1a1a16;          /* near-black */
+  --ink-soft:#46453d;
+  --grey:#76746b;         /* annotation grey */
+  --faint:#a7a59a;
+  --line:rgba(26,26,22,.16);
+  --line-2:rgba(26,26,22,.08);
+  --corten:#9c4a1d;       /* weathering-steel accent — used sparingly */
+  --corten-soft:rgba(156,74,29,.10);
+  --maxw:1180px;
+  --ease:cubic-bezier(.22,.7,.2,1);
+}
+
+*{box-sizing:border-box;margin:0;padding:0}
+html{scroll-behavior:smooth}
+body{
+  background:var(--paper);
+  color:var(--ink);
+  font-family:"Hanken Grotesk",system-ui,sans-serif;
+  line-height:1.55;
+  -webkit-font-smoothing:antialiased;
+  overflow-x:hidden;
+}
+a{color:inherit;text-decoration:none}
+img,video{display:block;max-width:100%}
+
+/* faint structural column grid — architectural drawing guides */
+.columns{
+  position:fixed;inset:0;z-index:0;pointer-events:none;
+  max-width:var(--maxw);margin:0 auto;
+  background-image:repeating-linear-gradient(90deg,var(--line-2) 0 1px,transparent 1px calc(100%/6));
+  opacity:0;animation:colsIn 2s var(--ease) .3s forwards;
+}
+@keyframes colsIn{to{opacity:1}}
+
+.wrap{max-width:var(--maxw);margin:0 auto;padding:0 40px;position:relative;z-index:2}
+
+/* ---------- NAV ---------- */
+.nav{position:sticky;top:0;z-index:50;background:rgba(238,237,231,.82);backdrop-filter:blur(8px);border-bottom:1px solid var(--line)}
+.nav-inner{max-width:var(--maxw);margin:0 auto;padding:18px 40px;display:flex;align-items:center;justify-content:space-between}
+.brand{font-family:"Bricolage Grotesque";font-weight:700;font-size:16px;letter-spacing:-.01em}
+.nav-links{display:flex;gap:30px;font-family:"DM Mono";font-size:12px;letter-spacing:.02em;color:var(--grey)}
+.nav-links a{position:relative;transition:color .25s}
+.nav-links a::after{content:"";position:absolute;left:0;bottom:-4px;height:1px;width:0;background:var(--corten);transition:width .3s var(--ease)}
+.nav-links a:hover{color:var(--ink)}
+.nav-links a:hover::after{width:100%}
+
+/* ---------- HERO ---------- */
+.hero{padding:90px 0 70px;position:relative}
+.hero-top{font-family:"DM Mono";font-size:12px;letter-spacing:.12em;color:var(--grey);display:flex;justify-content:space-between;border-bottom:1px solid var(--line);padding-bottom:14px;
+  opacity:0;animation:rise .8s var(--ease) .2s forwards}
+.hero h1{
+  font-family:"Bricolage Grotesque";font-weight:800;line-height:.94;letter-spacing:-.035em;
+  font-size:clamp(56px,13vw,168px);margin:36px 0 0;text-indent:-.02em;
+}
+.hero h1 .a{display:block;overflow:hidden}
+.hero h1 .a span{display:block;transform:translateY(110%);animation:reveal 1s var(--ease) forwards}
+.hero h1 .a:nth-child(1) span{animation-delay:.34s}
+.hero h1 .a:nth-child(2) span{animation-delay:.46s;color:var(--ink-soft)}
+.hero-foot{display:flex;justify-content:space-between;align-items:flex-end;gap:40px;margin-top:40px;flex-wrap:wrap}
+.hero-role{max-width:560px;font-size:clamp(16px,1.9vw,20px);color:var(--ink-soft);
+  opacity:0;animation:rise .9s var(--ease) .7s forwards}
+.hero-role b{color:var(--ink);font-weight:600}
+
+/* architectural title block */
+.titleblock{font-family:"DM Mono";font-size:11.5px;border:1px solid var(--line);min-width:260px;
+  opacity:0;animation:rise .9s var(--ease) .85s forwards}
+.tb-row{display:flex;border-bottom:1px solid var(--line)}
+.tb-row:last-child{border-bottom:none}
+.tb-k{width:96px;padding:8px 12px;color:var(--grey);border-right:1px solid var(--line);letter-spacing:.04em}
+.tb-v{padding:8px 12px;color:var(--ink);flex:1}
+.tb-v .mark{color:var(--corten)}
+
+@keyframes reveal{to{transform:translateY(0)}}
+@keyframes rise{from{opacity:0;transform:translateY(20px)}to{opacity:1;transform:none}}
+
+/* ---------- SECTION FRAME ---------- */
+.sheet{padding:84px 0;border-top:1px solid var(--line)}
+.sheet-head{display:flex;align-items:baseline;gap:22px;margin-bottom:50px}
+.sheet-id{font-family:"DM Mono";font-size:13px;color:var(--corten);letter-spacing:.04em}
+.sheet-title{font-family:"Bricolage Grotesque";font-weight:700;font-size:clamp(28px,4.4vw,46px);letter-spacing:-.02em;line-height:1}
+.sheet-note{font-family:"DM Mono";font-size:11.5px;color:var(--faint);margin-left:auto;letter-spacing:.03em}
+
+/* ---------- ABOUT ---------- */
+.about{max-width:720px;font-size:clamp(18px,2.3vw,24px);line-height:1.5;letter-spacing:-.01em;color:var(--ink)}
+.about .dim{color:var(--grey)}
+.about .mark{color:var(--corten)}
+
+/* ---------- EXPERIENCE ---------- */
+.xp-row{display:grid;grid-template-columns:150px 1fr;gap:36px;padding:28px 0;border-top:1px solid var(--line-2);position:relative}
+.xp-row:first-child{border-top:none}
+.xp-when{font-family:"DM Mono";font-size:12px;color:var(--grey);letter-spacing:.02em}
+.xp-when .term{display:block;color:var(--faint);font-size:11px;margin-top:6px}
+.xp-co{font-family:"Bricolage Grotesque";font-weight:700;font-size:22px;letter-spacing:-.015em;display:flex;align-items:center;gap:12px;flex-wrap:wrap}
+.xp-ro{font-family:"DM Mono";font-size:12px;color:var(--ink-soft);margin-top:5px;letter-spacing:.02em}
+.xp-row p{color:var(--grey);font-size:15px;margin-top:12px;max-width:660px}
+.xp-row p b{color:var(--ink);font-weight:600}
+.incoming{font-family:"DM Mono";font-size:10.5px;letter-spacing:.08em;color:var(--corten);border:1px solid var(--corten);padding:2px 8px}
+.xp-row.up::before{content:"";position:absolute;left:-40px;top:34px;width:7px;height:7px;background:var(--corten)}
+
+/* ---------- PROJECTS ---------- */
+.pj-grid{display:grid;grid-template-columns:repeat(2,1fr);gap:1px;background:var(--line-2);border:1px solid var(--line-2)}
+.pj{background:var(--paper);padding:34px;position:relative;transition:background .3s}
+.pj:hover{background:var(--paper-2)}
+.pj .pj-top{display:flex;align-items:baseline;justify-content:space-between;border-bottom:1px solid var(--line);padding-bottom:18px}
+.pj .spec{font-family:"Bricolage Grotesque";font-weight:700;font-size:clamp(34px,5vw,52px);letter-spacing:-.03em;line-height:.9}
+.pj .spec em{font-style:normal;font-size:.42em;color:var(--grey);font-weight:500}
+.pj .fig{font-family:"DM Mono";font-size:11px;color:var(--corten);letter-spacing:.04em}
+.pj .cap{font-family:"DM Mono";font-size:11px;color:var(--grey);margin-top:14px;letter-spacing:.01em}
+.pj h3{font-family:"Bricolage Grotesque";font-weight:700;font-size:21px;margin-top:8px;letter-spacing:-.015em}
+.pj p{color:var(--grey);font-size:14.5px;margin-top:10px}
+.tags{display:flex;flex-wrap:wrap;gap:6px;margin-top:18px}
+.tags span{font-family:"DM Mono";font-size:10.5px;color:var(--ink-soft);border:1px solid var(--line);padding:4px 8px}
+
+.pj-more{margin-top:1px;display:grid;grid-template-columns:repeat(2,1fr);gap:1px;background:var(--line-2);border:1px solid var(--line-2);border-top:none}
+.pm{background:var(--paper);padding:20px 28px;display:flex;justify-content:space-between;gap:18px;align-items:baseline;transition:background .25s}
+.pm:hover{background:var(--paper-2)}
+.pm .pm-n{font-family:"Bricolage Grotesque";font-weight:600;font-size:15px}
+.pm .pm-d{font-family:"DM Mono";font-size:11px;color:var(--grey);text-align:right;max-width:56%}
+
+/* ---------- EDUCATION ---------- */
+.edu-grid{display:grid;grid-template-columns:1fr 1fr;gap:1px;background:var(--line-2);border:1px solid var(--line-2)}
+.panel{background:var(--paper);padding:34px}
+.panel .lbl{font-family:"DM Mono";font-size:11px;letter-spacing:.1em;color:var(--corten);text-transform:uppercase;margin-bottom:22px}
+.edu-school{font-family:"Bricolage Grotesque";font-weight:700;font-size:26px;letter-spacing:-.02em}
+.edu-deg{color:var(--grey);margin-top:8px;font-size:15px}
+.edu-meta{display:flex;justify-content:space-between;margin-top:22px;padding-top:18px;border-top:1px solid var(--line);font-family:"DM Mono";font-size:12px}
+.edu-meta .gpa{color:var(--corten)}
+.cert{margin-top:18px;padding-top:18px;border-top:1px solid var(--line);display:flex;align-items:center;gap:14px;flex-wrap:wrap}
+.cert .badge{font-family:"DM Mono";font-weight:500;font-size:12px;color:var(--corten);border:1px solid var(--corten);padding:6px 10px;letter-spacing:.04em}
+.cert a{font-size:13.5px;color:var(--ink);border-bottom:1px solid var(--corten);padding-bottom:1px;transition:color .2s}
+.cert a:hover{color:var(--corten)}
+.skills .grp{margin-top:20px}
+.skills .grp:first-of-type{margin-top:0}
+.skills .gt{font-family:"DM Mono";font-size:11px;letter-spacing:.06em;color:var(--ink-soft);text-transform:uppercase}
+.skills .gl{display:flex;flex-wrap:wrap;gap:6px;margin-top:10px}
+.skills .gl span{font-family:"DM Mono";font-size:11px;color:var(--grey);border:1px solid var(--line);padding:4px 8px}
+
+/* awards */
+.awards{display:grid;grid-template-columns:repeat(3,1fr);gap:1px;background:var(--line-2);border:1px solid var(--line-2);margin-top:42px}
+.award{background:var(--paper);padding:26px}
+.award .yr{font-family:"DM Mono";font-size:11px;color:var(--corten);letter-spacing:.04em}
+.award .nm{font-family:"Bricolage Grotesque";font-weight:700;font-size:18px;margin-top:12px;letter-spacing:-.015em}
+.award .ds{font-size:13px;color:var(--grey);margin-top:8px}
+.edit{color:var(--faint);font-style:italic}
+
+/* ---------- OFF THE CLOCK ---------- */
+.block{padding:56px 0;border-top:1px solid var(--line-2)}
+.block:first-of-type{border-top:none;padding-top:6px}
+.block-kick{font-family:"DM Mono";font-size:11.5px;letter-spacing:.1em;color:var(--corten);text-transform:uppercase;display:flex;align-items:center;gap:14px;margin-bottom:10px}
+.block-kick .ln{height:1px;flex:1;background:var(--line)}
+.block-title{font-family:"Bricolage Grotesque";font-weight:700;font-size:clamp(24px,3.6vw,34px);letter-spacing:-.02em;margin-bottom:8px}
+.block-sub{color:var(--grey);max-width:620px;margin-bottom:30px;font-size:15px}
+
+/* climbing reels */
+.reels{display:grid;grid-template-columns:repeat(3,1fr);gap:18px}
+.reel{position:relative;aspect-ratio:9/16;overflow:hidden;background:var(--paper-2);border:1px solid var(--line)}
+.reel video{width:100%;height:100%;object-fit:cover}
+.reel .rcap{position:absolute;left:0;bottom:0;right:0;padding:12px 14px;font-family:"DM Mono";font-size:11px;color:#fff;background:linear-gradient(transparent,rgba(0,0,0,.55));letter-spacing:.02em;display:flex;justify-content:space-between;align-items:center}
+.reel .snd{cursor:pointer;border:1px solid rgba(255,255,255,.6);border-radius:50%;width:24px;height:24px;display:flex;align-items:center;justify-content:center;color:#fff;transition:background .2s}
+.reel .snd:hover{background:rgba(255,255,255,.18)}
+
+/* beli leaderboard */
+.beli{border:1px solid var(--line)}
+.beli-row{display:grid;grid-template-columns:42px 1fr auto;gap:18px;align-items:center;padding:16px 22px;border-top:1px solid var(--line-2);transition:background .25s}
+.beli-row:first-child{border-top:none}
+.beli-row:hover{background:var(--paper-2)}
+.beli-row .rk{font-family:"Bricolage Grotesque";font-weight:700;font-size:20px;color:var(--corten)}
+.beli-row .pl{font-family:"Bricolage Grotesque";font-weight:600;font-size:16px;letter-spacing:-.01em}
+.beli-row .ct{font-family:"DM Mono";font-size:11px;color:var(--faint);margin-top:2px}
+.beli-row .sc{font-family:"DM Mono";font-size:14px;color:var(--ink)}
+.tlink{display:inline-flex;align-items:center;gap:8px;margin-top:20px;font-family:"DM Mono";font-size:12.5px;color:var(--ink);border-bottom:1px solid var(--corten);padding-bottom:2px;transition:color .2s}
+.tlink:hover{color:var(--corten)}
+
+/* music */
+.music-grid{display:grid;grid-template-columns:1.3fr 1fr;gap:26px;align-items:start}
+.embed-slot{border:1px solid var(--line);min-height:152px;display:flex;align-items:center;justify-content:center;text-align:center;padding:24px;background:var(--paper-2)}
+.embed-slot .es{font-family:"DM Mono";font-size:12px;color:var(--grey);line-height:1.7;max-width:320px}
+.embed-slot .es b{color:var(--ink)}
+.embed-slot iframe{width:100%;border:0}
+.rotation .rt-h{font-family:"DM Mono";font-size:11px;letter-spacing:.08em;color:var(--ink-soft);text-transform:uppercase;margin-bottom:14px}
+.rot-row{display:flex;justify-content:space-between;gap:16px;padding:13px 0;border-top:1px solid var(--line-2)}
+.rot-row:first-of-type{border-top:none}
+.rot-row .ar{font-family:"Bricolage Grotesque";font-weight:600;font-size:15px}
+.rot-row .al{font-family:"DM Mono";font-size:11px;color:var(--faint)}
+
+/* faith */
+.recs{display:grid;grid-template-columns:repeat(3,1fr);gap:1px;background:var(--line-2);border:1px solid var(--line-2)}
+.rec{background:var(--paper);padding:28px;transition:background .3s}
+.rec:hover{background:var(--paper-2)}
+.rec .rt{font-family:"DM Mono";font-size:10.5px;letter-spacing:.08em;color:var(--corten);text-transform:uppercase}
+.rec h4{font-family:"Bricolage Grotesque";font-weight:700;font-size:20px;margin-top:14px;letter-spacing:-.02em;line-height:1.15}
+.rec .au{font-family:"DM Mono";font-size:12px;color:var(--ink-soft);margin-top:7px}
+.rec p{font-size:14px;color:var(--grey);margin-top:13px;line-height:1.6}
+
+/* ---------- CONTACT ---------- */
+.contact{padding:100px 0 86px;border-top:1px solid var(--line)}
+.contact h2{font-family:"Bricolage Grotesque";font-weight:800;font-size:clamp(40px,8vw,104px);letter-spacing:-.04em;line-height:.92}
+.contact h2 .o{color:var(--ink-soft)}
+.contact .sub{color:var(--grey);margin-top:24px;font-size:17px;max-width:520px}
+.links{display:flex;gap:30px;margin-top:36px;flex-wrap:wrap;font-family:"DM Mono";font-size:14px}
+.links a{display:inline-flex;align-items:center;gap:8px;position:relative;padding-bottom:4px}
+.links a::after{content:"";position:absolute;left:0;bottom:0;height:1px;width:100%;background:var(--line)}
+.links a span{position:absolute;left:0;bottom:0;height:1px;width:0;background:var(--corten);transition:width .3s var(--ease)}
+.links a:hover span{width:100%}
+
+footer{border-top:1px solid var(--line);padding:26px 0}
+.foot{max-width:var(--maxw);margin:0 auto;padding:0 40px;display:flex;justify-content:space-between;flex-wrap:wrap;gap:12px;font-family:"DM Mono";font-size:11px;color:var(--faint);letter-spacing:.03em}
+
+/* ---------- REVEAL ---------- */
+.reveal{opacity:0;transform:translateY(22px);transition:opacity .8s var(--ease),transform .8s var(--ease)}
+.reveal.in{opacity:1;transform:none}
+
+/* ---------- RESPONSIVE ---------- */
+@media (max-width:860px){
+  .wrap{padding:0 24px}
+  .nav-inner,.foot{padding-left:24px;padding-right:24px}
+  .nav-links{display:none}
+  .pj-grid,.pj-more,.edu-grid,.awards,.recs,.music-grid{grid-template-columns:1fr}
+  .reels{grid-template-columns:1fr 1fr}
+  .xp-row{grid-template-columns:1fr;gap:6px}
+  .xp-row.up::before{display:none}
+  .sheet-note{display:none}
+  .columns{background-image:repeating-linear-gradient(90deg,var(--line-2) 0 1px,transparent 1px calc(100%/3))}
+}
+@media (max-width:520px){
+  .reels{grid-template-columns:1fr}
+  .awards{grid-template-columns:1fr}
+}
+@media (prefers-reduced-motion:reduce){
+  *{animation:none !important;transition:none !important}
+  .reveal{opacity:1;transform:none}
+  .columns{opacity:1}
+  .hero h1 .a span{transform:none}
+}
+</style>
+</head>
+<body>
+
+<div class="columns"></div>
+
+<!-- ===================== NAV ===================== -->
+<nav class="nav">
+  <div class="nav-inner">
+    <a href="#top" class="brand">Zachary Barandino</a>
+    <div class="nav-links">
+      <a href="#work">Experience</a>
+      <a href="#projects">Projects</a>
+      <a href="#education">Education</a>
+      <a href="#off">Off the Clock</a>
+      <a href="#contact">Contact</a>
+    </div>
+  </div>
+</nav>
+
+<!-- ===================== HERO ===================== -->
+<header class="hero wrap" id="top">
+  <div class="hero-top">
+    <span>MECHATRONICS ENGINEERING</span>
+    <span>UNIVERSITY OF WATERLOO</span>
+    <span>PORTFOLIO / 2026</span>
+  </div>
+
+  <h1>
+    <span class="a"><span>ZACHARY</span></span>
+    <span class="a"><span>BARANDINO</span></span>
+  </h1>
+
+  <div class="hero-foot">
+    <p class="hero-role">I design and build machines that have to survive the real world — <b>machine-vision inspection</b>, <b>precision tooling</b>, <b>battery systems</b>, and <b>embedded prototypes</b>. From a software fix to a spot-welded pack.</p>
+
+    <div class="titleblock">
+      <div class="tb-row"><div class="tb-k">NAME</div><div class="tb-v">Zachary Barandino</div></div>
+      <div class="tb-row"><div class="tb-k">DISCIPLINE</div><div class="tb-v">Mechatronics Eng.</div></div>
+      <div class="tb-row"><div class="tb-k">LOCATION</div><div class="tb-v">Toronto / Waterloo</div></div>
+      <div class="tb-row"><div class="tb-k">STATUS</div><div class="tb-v"><span class="mark">●</span> Base Power · Fall 2026</div></div>
+      <div class="tb-row"><div class="tb-k">SHEET</div><div class="tb-v">A.00 — Index</div></div>
+    </div>
+  </div>
+</header>
+
+<!-- ===================== ABOUT ===================== -->
+<section class="sheet wrap" id="about">
+  <p class="about reveal">
+    Mechatronics engineering student at the <span class="mark">University of Waterloo</span>, drawn to the messy middle of hardware —
+    where CAD meets a real tolerance stack, a vision pipeline meets bad lighting, and a battery pack meets a 600&nbsp;W motor.
+    <span class="dim">Five completed co-op terms across manufacturing, automation, and mechatronics, a 4.0 GPA, and a sixth term ahead at Base Power this fall. Off the clock: climbing, ranking restaurants, and a steady stack of theology books.</span>
+  </p>
+</section>
+
+<!-- ===================== EXPERIENCE ===================== -->
+<section class="sheet wrap" id="work">
+  <div class="sheet-head reveal">
+    <span class="sheet-id">A.01</span>
+    <h2 class="sheet-title">Experience</h2>
+    <span class="sheet-note">co-op progression / newest first</span>
+  </div>
+
+  <div class="xp">
+    <div class="xp-row up reveal">
+      <div class="xp-when">Sep — Dec 2026<span class="term">Incoming</span></div>
+      <div>
+        <div class="xp-co">Base Power <span class="incoming">INCOMING</span></div>
+        <div class="xp-ro">Manufacturing Test Intern</div>
+        <p>Joining Base Power this fall on the manufacturing test side. <span class="edit">— details to come.</span></p>
+      </div>
+    </div>
+
+    <div class="xp-row reveal">
+      <div class="xp-when">Jan — Apr 2026<span class="term">W26</span></div>
+      <div>
+        <div class="xp-co">Electrans Technologies</div>
+        <div class="xp-ro">Mechatronics Intern</div>
+        <p>Built a full-stack QA vision station — a 3D-printed optomechanical fixture and a Python/OpenCV pipeline on a Raspberry&nbsp;Pi&nbsp;5 — that cut cycle times <b>74%</b>. Led the 0-to-1 design of a precision locating tool with a self-locking lead-screw drive and inductive sensing for corrosive environments, and validated a weldment fixture to <b>1537&nbsp;Hz</b> through modal analysis and topology optimization for 6g random-vibration testing.</p>
+      </div>
+    </div>
+
+    <div class="xp-row reveal">
+      <div class="xp-when">May — Aug 2025<span class="term">S25</span></div>
+      <div>
+        <div class="xp-co">ATS Life Sciences Systems</div>
+        <div class="xp-ro">Mechanical Designer</div>
+        <p>Led proof-of-principle for an automated canister-handling system — a compliant vacuum end-effector that cut surface damage <b>90%+</b> versus rigid pickup. Designed a servo-driven, thrubeam-sensed tray-alignment system (<b>+9%</b> throughput) and re-laid cell conveyance for <b>$800K</b> in material and labor savings.</p>
+      </div>
+    </div>
+
+    <div class="xp-row reveal">
+      <div class="xp-when">Jan — Apr 2025<span class="term">W25</span></div>
+      <div>
+        <div class="xp-co">Electrium Mobility</div>
+        <div class="xp-ro">Project Lead</div>
+        <p>Led the electromechanical design and integration of a custom OneWheel inside a <b>$1000</b> budget — welded frame, sheet metal, and a spot-welded 16S2P Li-ion pack with BMS feeding a 600&nbsp;W BLDC motor.</p>
+      </div>
+    </div>
+
+    <div class="xp-row reveal">
+      <div class="xp-when">Sep — Dec 2024<span class="term">F24</span></div>
+      <div>
+        <div class="xp-co">PWO Canada</div>
+        <div class="xp-ro">Process Engineering</div>
+        <p>Designed sensor-integrated tooling for automated cross-car-beam welding cells in SolidEdge — anti-spatter shielding and thermal copper coatings dropped scrap <b>33%</b>. RCA and time studies cut cycle time another <b>12%</b>.</p>
+      </div>
+    </div>
+
+    <div class="xp-row reveal">
+      <div class="xp-when">Jan — Apr 2024<span class="term">W24</span></div>
+      <div>
+        <div class="xp-co">Linamar</div>
+        <div class="xp-ro">Manufacturing Engineering</div>
+        <p>Redesigned pneumatic gripper fingers with DFM/A for <b>$3000</b> in savings, built sheet-metal broaching tooling that shortened cycle time <b>32%</b>, and coded an Excel VBA planner that cut shift planning <b>70%</b>.</p>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ===================== PROJECTS ===================== -->
+<section class="sheet wrap" id="projects">
+  <div class="sheet-head reveal">
+    <span class="sheet-id">A.02</span>
+    <h2 class="sheet-title">Projects</h2>
+    <span class="sheet-note">design + build / selected</span>
+  </div>
+
+  <div class="pj-grid">
+    <article class="pj reveal">
+      <div class="pj-top"><div class="spec">74<em>%</em></div><div class="fig">FIG.01</div></div>
+      <div class="cap">inspection time eliminated · 0.24° (1σ) repeatability</div>
+      <h3>Image Logger</h3>
+      <p>A machine-vision QA station for connector pins, pneumatic fittings, and sheet-metal defects. Dual cameras with active thermal management, a calibrated OpenCV pipeline, and a detection engine built on phase correlation, radial symmetry, NCC, and RANSAC.</p>
+      <div class="tags"><span>Python</span><span>OpenCV</span><span>Raspberry Pi 5</span><span>3D Printing</span></div>
+    </article>
+
+    <article class="pj reveal">
+      <div class="pj-top"><div class="spec">±0.254<em>mm</em></div><div class="fig">FIG.02</div></div>
+      <div class="cap">hole-pattern marking precision · under $5K</div>
+      <h3>Universal Trailer Tool</h3>
+      <p>A mechatronic tool that marks a hole pattern on trailer faces, robust to damage and corrosive yards. Non-backdriveable 7° lead-screw drive, over-center kingpin capture with torsion springs, and inductive sensing on 18V tool batteries.</p>
+      <div class="tags"><span>SolidWorks</span><span>Lead Screw</span><span>Inductive Sensing</span><span>304 SS</span></div>
+    </article>
+
+    <article class="pj reveal">
+      <div class="pj-top"><div class="spec">16S2P</div><div class="fig">FIG.03</div></div>
+      <div class="cap">custom pack · 600W BLDC · &lt;$1000 build</div>
+      <h3>Custom OneWheel</h3>
+      <p>Designed and integrated a OneWheel from scratch — SolidWorks weldments and sheet metal, machined aluminum and 3D-printed housings, and a spot-welded 16S2P pack with BMS, VESC, and dynamic LED underglow.</p>
+      <div class="tags"><span>SolidWorks</span><span>Battery / BMS</span><span>Spot Welding</span><span>Machining</span></div>
+    </article>
+
+    <article class="pj reveal">
+      <div class="pj-top"><div class="spec">±1<em>mm</em></div><div class="fig">FIG.04</div></div>
+      <div class="cap">calibrated across 4.7 – 123.3 mm</div>
+      <h3>Digital Caliper</h3>
+      <p>An ESP32 prototype that emulates a digital caliper — a slide potentiometer read through the 12-bit ADC, mapped to millimetres with a calibration curve, and rendered live on an SSD1306 OLED over I²C.</p>
+      <div class="tags"><span>ESP32</span><span>C++</span><span>I²C</span><span>Embedded</span></div>
+    </article>
+  </div>
+
+  <div class="pj-more reveal">
+    <div class="pm"><span class="pm-n">Maze Runner</span><span class="pm-d">DFS search-and-rescue robot · 67% success · C, sensors</span></div>
+    <div class="pm"><span class="pm-n">Suspension Mount</span><span class="pm-d">FEA-driven scooter mount · FOS &gt; 2 · 10ga CRS</span></div>
+    <div class="pm"><span class="pm-n">Spring-Loaded Part Clamp</span><span class="pm-d">Passive OD clamp · &lt;3g hold · FDM prototyped</span></div>
+    <div class="pm"><span class="pm-n">4-Pin Gauge Mount</span><span class="pm-d">3-axis adjustable jig · −22% cycle, −50% error</span></div>
+  </div>
+</section>
+
+<!-- ===================== EDUCATION ===================== -->
+<section class="sheet wrap" id="education">
+  <div class="sheet-head reveal">
+    <span class="sheet-id">A.03</span>
+    <h2 class="sheet-title">Education</h2>
+    <span class="sheet-note">credentials + stack</span>
+  </div>
+
+  <div class="edu-grid">
+    <div class="panel reveal">
+      <div class="lbl">Degree</div>
+      <div class="edu-school">University of Waterloo</div>
+      <div class="edu-deg">BASc (Honours) Mechatronics Engineering — Computing &amp; AI options</div>
+      <div class="edu-meta"><span>Sep 2023 — May 2028</span><span class="gpa">4.0 GPA</span></div>
+      <div class="cert">
+        <span class="badge">CSWP</span>
+        <a href="https://cv.virtualtester.com/qr/?b=SLDWRKS&i=C-H2U8XV96ST" target="_blank" rel="noopener">Certified SolidWorks Professional — verify ↗</a>
+      </div>
+    </div>
+
+    <div class="panel skills reveal">
+      <div class="lbl">Technical Stack</div>
+      <div class="grp">
+        <div class="gt">Mechanical</div>
+        <div class="gl"><span>SolidWorks (CAD/FEA/PLM)</span><span>GD&amp;T</span><span>DFM/A</span><span>RCA</span><span>Tolerance Analysis</span><span>3D Printing</span><span>Machining</span></div>
+      </div>
+      <div class="grp">
+        <div class="gt">Hardware &amp; Embedded</div>
+        <div class="gl"><span>Raspberry Pi</span><span>Arduino</span><span>STM32</span><span>ESP32</span><span>I²C</span><span>SPI</span><span>UART</span><span>Soldering</span><span>Spot Welding</span><span>Oscilloscope</span></div>
+      </div>
+      <div class="grp">
+        <div class="gt">Software</div>
+        <div class="gl"><span>MATLAB</span><span>C</span><span>C++</span><span>Python</span><span>VHDL</span><span>ROS2</span><span>Linux</span><span>Bash</span><span>Git</span><span>Altium</span><span>Jira</span></div>
+      </div>
+    </div>
+  </div>
+
+  <!-- AWARDS -->
+  <div class="sheet-head reveal" style="margin-top:60px;margin-bottom:28px">
+    <span class="sheet-id">A.03.1</span>
+    <h2 class="sheet-title" style="font-size:clamp(22px,3vw,30px)">Awards</h2>
+    <span class="sheet-note">edit to your real honours</span>
+  </div>
+  <!-- EDIT: replace with your real awards (scholarships, Dean's list, competition placements) -->
+  <div class="awards">
+    <div class="award reveal"><div class="yr">2023 — 2026</div><div class="nm">Term Distinction</div><div class="ds"><span class="edit">Placeholder — e.g. Dean's Honours List. Replace with your real award.</span></div></div>
+    <div class="award reveal"><div class="yr">2023</div><div class="nm">Entrance Scholarship</div><div class="ds"><span class="edit">Placeholder — add the scholarship name, or remove this card.</span></div></div>
+    <div class="award reveal"><div class="yr">YYYY</div><div class="nm">Design Competition</div><div class="ds"><span class="edit">Placeholder — add a competition placement, or remove this card.</span></div></div>
+  </div>
+</section>
+
+<!-- ===================== OFF THE CLOCK ===================== -->
+<section class="sheet wrap" id="off">
+  <div class="sheet-head reveal">
+    <span class="sheet-id">A.04</span>
+    <h2 class="sheet-title">Off the Clock</h2>
+    <span class="sheet-note">climbing / food / music / faith</span>
+  </div>
+
+  <!-- CLIMBING -->
+  <div class="block reveal">
+    <div class="block-kick">Climbing <span class="ln"></span></div>
+    <div class="block-title">On the Wall</div>
+    <p class="block-sub">Projects, sends, and the occasional spectacular fall. Tap a clip for sound.</p>
+    <div class="reels">
+      <div class="reel">
+        <video src="media/climb-1.mp4" poster="media/climb-1.jpg" muted loop playsinline preload="metadata"></video>
+        <div class="rcap"><span>// send 01</span><span class="snd" aria-label="Toggle sound">♪</span></div>
+      </div>
+      <div class="reel">
+        <video src="media/climb-2.mp4" poster="media/climb-2.jpg" muted loop playsinline preload="metadata"></video>
+        <div class="rcap"><span>// send 02</span><span class="snd" aria-label="Toggle sound">♪</span></div>
+      </div>
+      <div class="reel">
+        <video src="media/climb-3.mp4" poster="media/climb-3.jpg" muted loop playsinline preload="metadata"></video>
+        <div class="rcap"><span>// send 03</span><span class="snd" aria-label="Toggle sound">♪</span></div>
+      </div>
+    </div>
+  </div>
+
+  <!-- BELI -->
+  <div class="block reveal">
+    <div class="block-kick">Beli <span class="ln"></span></div>
+    <div class="block-title">Food, Ranked</div>
+    <p class="block-sub">An ongoing, deeply scientific leaderboard of where to eat.</p>
+    <!-- EDIT: replace these rows with your real Beli top spots. -->
+    <div class="beli">
+      <div class="beli-row"><span class="rk">1</span><div><div class="pl">Restaurant Name</div><div class="ct">Neighbourhood, City</div></div><span class="sc">9.8</span></div>
+      <div class="beli-row"><span class="rk">2</span><div><div class="pl">Restaurant Name</div><div class="ct">Neighbourhood, City</div></div><span class="sc">9.5</span></div>
+      <div class="beli-row"><span class="rk">3</span><div><div class="pl">Restaurant Name</div><div class="ct">Neighbourhood, City</div></div><span class="sc">9.3</span></div>
+      <div class="beli-row"><span class="rk">4</span><div><div class="pl">Restaurant Name</div><div class="ct">Neighbourhood, City</div></div><span class="sc">9.1</span></div>
+    </div>
+    <a class="tlink" href="https://beliapp.co/app/zachb_" target="_blank" rel="noopener">View full Beli profile ↗</a>
+  </div>
+
+  <!-- MUSIC -->
+  <div class="block reveal">
+    <div class="block-kick">Music <span class="ln"></span></div>
+    <div class="block-title">In the Headphones</div>
+    <p class="block-sub">What's playing while I'm modeling parts or warming up on the wall.</p>
+    <div class="music-grid">
+      <!-- EDIT: paste a Spotify playlist embed. In Spotify: Share → Embed playlist → copy the iframe and replace the block below.
+           Example: <iframe style="height:352px" src="https://open.spotify.com/embed/playlist/PLAYLIST_ID?theme=0" allow="encrypted-media" loading="lazy"></iframe> -->
+      <div class="embed-slot">
+        <div class="es"><b>Add your Spotify playlist here.</b><br>Share → Embed playlist → paste the iframe into this slot (see the comment in the code).</div>
+      </div>
+      <!-- EDIT: swap these for what you're actually listening to -->
+      <div class="rotation">
+        <div class="rt-h">On Rotation</div>
+        <div class="rot-row"><span class="ar">Artist / Album</span><span class="al">genre</span></div>
+        <div class="rot-row"><span class="ar">Artist / Album</span><span class="al">genre</span></div>
+        <div class="rot-row"><span class="ar">Artist / Album</span><span class="al">genre</span></div>
+        <div class="rot-row"><span class="ar">Artist / Album</span><span class="al">genre</span></div>
+      </div>
+    </div>
+  </div>
+
+  <!-- FAITH -->
+  <div class="block reveal">
+    <div class="block-kick">Faith <span class="ln"></span></div>
+    <div class="block-title">What I'm Reading</div>
+    <p class="block-sub">Christian books worth your time.</p>
+    <div class="recs">
+      <div class="rec reveal">
+        <div class="rt">Book</div>
+        <h4>Crazy Love</h4>
+        <div class="au">Francis Chan</div>
+        <p>A bracing push against lukewarm faith — short, direct, and hard to read passively. It reframes what it actually looks like to take God seriously.</p>
+      </div>
+      <div class="rec reveal">
+        <div class="rt">Book</div>
+        <h4>The Great Divorce</h4>
+        <div class="au">C. S. Lewis</div>
+        <p>A dream-vision of a bus ride from hell to heaven. Lewis turns abstract questions about grace and choice into something vivid and unsettling.</p>
+      </div>
+      <div class="rec reveal">
+        <div class="rt">Add one</div>
+        <h4>Your Next Pick</h4>
+        <div class="au">Author</div>
+        <p><span class="edit">Placeholder — drop in a third recommendation, or delete this card to keep two.</span></p>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ===================== CONTACT ===================== -->
+<section class="contact wrap" id="contact">
+  <div class="reveal">
+    <h2>Let's build<br><span class="o">something.</span></h2>
+    <p class="sub">Open to conversations about hardware, automation, and anything that has to move precisely.</p>
+    <div class="links">
+      <a href="mailto:zachary.barandino@uwaterloo.ca">zachary.barandino@uwaterloo.ca<span></span></a>
+      <a href="https://www.linkedin.com/in/zachary-barandino/" target="_blank" rel="noopener">LinkedIn ↗<span></span></a>
+    </div>
+    <!-- Note: phone number is intentionally left off the public page to reduce spam. Add it here if you want it visible. -->
+  </div>
+</section>
+
+<footer>
+  <div class="foot">
+    <span>ZACHARY BARANDINO — MECHATRONICS — UNIVERSITY OF WATERLOO</span>
+    <span>© 2026 · SHEET A.00–A.04</span>
+  </div>
+</footer>
+
+<script>
+  (function(){
+    var reduce = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+
+    // Scroll reveal
+    var els = document.querySelectorAll('.reveal');
+    if(reduce || !('IntersectionObserver' in window)){
+      els.forEach(function(e){e.classList.add('in')});
+    } else {
+      document.querySelectorAll('.pj-grid, .awards, .recs, .reels, .xp').forEach(function(g){
+        g.querySelectorAll('.reveal').forEach(function(el,i){ el.dataset.d = i*60; });
+      });
+      var io = new IntersectionObserver(function(entries){
+        entries.forEach(function(en){
+          if(en.isIntersecting){
+            en.target.style.transitionDelay = (en.target.dataset.d || 0) + 'ms';
+            en.target.classList.add('in');
+            io.unobserve(en.target);
+          }
+        });
+      },{threshold:.12, rootMargin:'0px 0px -8% 0px'});
+      els.forEach(function(e){io.observe(e)});
+    }
+
+    // Climbing reels: play only when in view; respect reduced motion; tap to toggle sound
+    var vids = document.querySelectorAll('.reel video');
+    if(reduce){
+      vids.forEach(function(v){ v.setAttribute('controls',''); });
+    } else if('IntersectionObserver' in window){
+      var vio = new IntersectionObserver(function(entries){
+        entries.forEach(function(en){
+          var v = en.target;
+          if(en.isIntersecting){ v.play().catch(function(){}); }
+          else { v.pause(); }
+        });
+      },{threshold:.4});
+      vids.forEach(function(v){ vio.observe(v); });
+    }
+    // tap clip (or the ♪) to toggle sound
+    document.querySelectorAll('.reel').forEach(function(reel){
+      var v = reel.querySelector('video');
+      var btn = reel.querySelector('.snd');
+      function toggle(){ v.muted = !v.muted; if(!v.muted){ v.play().catch(function(){}); } btn.style.background = v.muted ? '' : 'rgba(255,255,255,.3)'; }
+      reel.addEventListener('click', toggle);
+    });
+  })();
+</script>
+</body>
+</html>
