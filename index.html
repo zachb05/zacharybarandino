@@ -6,22 +6,21 @@
 <title>Zachary Barandino — Mechatronics Engineering</title>
 <meta name="description" content="Zachary Barandino — Mechatronics Engineering at the University of Waterloo. Machine vision, precision tooling, embedded systems, and mechanism design." />
 
-<!-- Type: Bricolage Grotesque (display), Hanken Grotesk (body), DM Mono (annotation/labels) -->
 <link rel="preconnect" href="https://fonts.googleapis.com" />
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
 <link href="https://fonts.googleapis.com/css2?family=Bricolage+Grotesque:opsz,wght@12..96,500;12..96,600;12..96,700;12..96,800&family=DM+Mono:wght@400;500&family=Hanken+Grotesk:wght@400;500;600&display=swap" rel="stylesheet" />
 
 <style>
 :root{
-  --paper:#EEEDE7;        /* concrete */
+  --paper:#EEEDE7;
   --paper-2:#E7E5DD;
-  --ink:#1a1a16;          /* near-black */
+  --ink:#1a1a16;
   --ink-soft:#46453d;
-  --grey:#76746b;         /* annotation grey */
+  --grey:#76746b;
   --faint:#a7a59a;
   --line:rgba(26,26,22,.16);
   --line-2:rgba(26,26,22,.08);
-  --corten:#9c4a1d;       /* weathering-steel accent — used sparingly */
+  --corten:#9c4a1d;
   --corten-soft:rgba(156,74,29,.10);
   --maxw:1180px;
   --ease:cubic-bezier(.22,.7,.2,1);
@@ -40,7 +39,6 @@ body{
 a{color:inherit;text-decoration:none}
 img,video{display:block;max-width:100%}
 
-/* faint structural column grid — architectural drawing guides */
 .columns{
   position:fixed;inset:0;z-index:0;pointer-events:none;
   max-width:var(--maxw);margin:0 auto;
@@ -78,7 +76,6 @@ img,video{display:block;max-width:100%}
   opacity:0;animation:rise .9s var(--ease) .7s forwards}
 .hero-role b{color:var(--ink);font-weight:600}
 
-/* architectural title block */
 .titleblock{font-family:"DM Mono";font-size:11.5px;border:1px solid var(--line);min-width:260px;
   opacity:0;animation:rise .9s var(--ease) .85s forwards}
 .tb-row{display:flex;border-bottom:1px solid var(--line)}
@@ -128,11 +125,31 @@ img,video{display:block;max-width:100%}
 .tags{display:flex;flex-wrap:wrap;gap:6px;margin-top:18px}
 .tags span{font-family:"DM Mono";font-size:10.5px;color:var(--ink-soft);border:1px solid var(--line);padding:4px 8px}
 
-.pj-more{margin-top:1px;display:grid;grid-template-columns:repeat(2,1fr);gap:1px;background:var(--line-2);border:1px solid var(--line-2);border-top:none}
-.pm{background:var(--paper);padding:20px 28px;display:flex;justify-content:space-between;gap:18px;align-items:baseline;transition:background .25s}
+/* expandable project panels */
+.pj-toggle{margin-top:18px;width:100%;background:none;border:1px solid var(--line);padding:8px 14px;font-family:"DM Mono";font-size:11px;letter-spacing:.06em;color:var(--grey);cursor:pointer;display:flex;justify-content:space-between;align-items:center;transition:background .2s,color .2s}
+.pj-toggle:hover{background:var(--paper-2);color:var(--ink)}
+.pj-toggle .arr{display:inline-block;transition:transform .35s var(--ease)}
+.pj.open .pj-toggle .arr{transform:rotate(180deg)}
+.pj-panel{max-height:0;overflow:hidden;transition:max-height .5s var(--ease)}
+.pj.open .pj-panel{max-height:900px}
+.pj-img{margin-top:18px;aspect-ratio:16/9;background:var(--paper-2);border:1px solid var(--line);display:flex;align-items:center;justify-content:center;overflow:hidden}
+.pj-img img{width:100%;height:100%;object-fit:cover}
+.img-ph{font-family:"DM Mono";font-size:11px;color:var(--faint);text-align:center;padding:20px;line-height:1.9}
+.pj-pdesc{font-size:14px;color:var(--grey);margin-top:14px;padding-bottom:4px;line-height:1.65;font-style:italic}
+
+/* expandable minor project rows */
+.pj-more{margin-top:1px;display:flex;flex-direction:column;gap:1px;background:var(--line-2);border:1px solid var(--line-2);border-top:none}
+.pm{background:var(--paper);transition:background .25s}
 .pm:hover{background:var(--paper-2)}
+.pm-header{padding:20px 28px;display:flex;justify-content:space-between;gap:18px;align-items:center;cursor:pointer}
 .pm .pm-n{font-family:"Bricolage Grotesque";font-weight:600;font-size:15px}
-.pm .pm-d{font-family:"DM Mono";font-size:11px;color:var(--grey);text-align:right;max-width:56%}
+.pm .pm-d{font-family:"DM Mono";font-size:11px;color:var(--grey);flex:1;text-align:right;max-width:50%}
+.pm-arr{font-family:"DM Mono";font-size:11px;color:var(--faint);display:inline-block;transition:transform .35s var(--ease);flex-shrink:0;margin-left:10px}
+.pm.open .pm-arr{transform:rotate(180deg)}
+.pm-panel{max-height:0;overflow:hidden;transition:max-height .45s var(--ease)}
+.pm.open .pm-panel{max-height:700px}
+.pm-inner{padding:0 28px 24px}
+.pm-inner .pj-img{margin-top:0}
 
 /* ---------- EDUCATION ---------- */
 .edu-grid{display:grid;grid-template-columns:1fr 1fr;gap:1px;background:var(--line-2);border:1px solid var(--line-2)}
@@ -152,9 +169,10 @@ img,video{display:block;max-width:100%}
 .skills .gl{display:flex;flex-wrap:wrap;gap:6px;margin-top:10px}
 .skills .gl span{font-family:"DM Mono";font-size:11px;color:var(--grey);border:1px solid var(--line);padding:4px 8px}
 
-/* awards */
-.awards{display:grid;grid-template-columns:repeat(3,1fr);gap:1px;background:var(--line-2);border:1px solid var(--line-2);margin-top:42px}
-.award{background:var(--paper);padding:26px}
+/* awards — horizontal swipe carousel */
+.awards{display:flex;overflow-x:auto;scroll-snap-type:x mandatory;-webkit-overflow-scrolling:touch;scrollbar-width:none;gap:1px;background:var(--line-2);border:1px solid var(--line-2);margin-top:42px}
+.awards::-webkit-scrollbar{display:none}
+.award{background:var(--paper);padding:26px;flex:0 0 min(280px,78vw);scroll-snap-align:start}
 .award .yr{font-family:"DM Mono";font-size:11px;color:var(--corten);letter-spacing:.04em}
 .award .nm{font-family:"Bricolage Grotesque";font-weight:700;font-size:18px;margin-top:12px;letter-spacing:-.015em}
 .award .ds{font-size:13px;color:var(--grey);margin-top:8px}
@@ -190,10 +208,8 @@ img,video{display:block;max-width:100%}
 
 /* music */
 .music-grid{display:grid;grid-template-columns:1.3fr 1fr;gap:26px;align-items:start}
-.embed-slot{border:1px solid var(--line);min-height:152px;display:flex;align-items:center;justify-content:center;text-align:center;padding:24px;background:var(--paper-2)}
-.embed-slot .es{font-family:"DM Mono";font-size:12px;color:var(--grey);line-height:1.7;max-width:320px}
-.embed-slot .es b{color:var(--ink)}
-.embed-slot iframe{width:100%;border:0}
+.embed-slot{border:1px solid var(--line);overflow:hidden;background:var(--paper-2)}
+.embed-slot iframe{width:100%;border:0;display:block}
 .rotation .rt-h{font-family:"DM Mono";font-size:11px;letter-spacing:.08em;color:var(--ink-soft);text-transform:uppercase;margin-bottom:14px}
 .rot-row{display:flex;justify-content:space-between;gap:16px;padding:13px 0;border-top:1px solid var(--line-2)}
 .rot-row:first-of-type{border-top:none}
@@ -232,7 +248,7 @@ footer{border-top:1px solid var(--line);padding:26px 0}
   .wrap{padding:0 24px}
   .nav-inner,.foot{padding-left:24px;padding-right:24px}
   .nav-links{display:none}
-  .pj-grid,.pj-more,.edu-grid,.awards,.recs,.music-grid{grid-template-columns:1fr}
+  .pj-grid,.edu-grid,.recs,.music-grid{grid-template-columns:1fr}
   .reels{grid-template-columns:1fr 1fr}
   .xp-row{grid-template-columns:1fr;gap:6px}
   .xp-row.up::before{display:none}
@@ -241,7 +257,6 @@ footer{border-top:1px solid var(--line);padding:26px 0}
 }
 @media (max-width:520px){
   .reels{grid-template-columns:1fr}
-  .awards{grid-template-columns:1fr}
 }
 @media (prefers-reduced-motion:reduce){
   *{animation:none !important;transition:none !important}
@@ -297,11 +312,7 @@ footer{border-top:1px solid var(--line);padding:26px 0}
 
 <!-- ===================== ABOUT ===================== -->
 <section class="sheet wrap" id="about">
-  <p class="about reveal">
-    Mechatronics engineering student at the <span class="mark">University of Waterloo</span>, drawn to the messy middle of hardware —
-    where CAD meets a real tolerance stack, a vision pipeline meets bad lighting, and a battery pack meets a 600&nbsp;W motor.
-    <span class="dim">Five completed co-op terms across manufacturing, automation, and mechatronics, a 4.0 GPA, and a sixth term ahead at Base Power this fall. Off the clock: climbing, ranking restaurants, and a steady stack of theology books.</span>
-  </p>
+  <p class="about reveal"></p>
 </section>
 
 <!-- ===================== EXPERIENCE ===================== -->
@@ -318,7 +329,7 @@ footer{border-top:1px solid var(--line);padding:26px 0}
       <div>
         <div class="xp-co">Base Power <span class="incoming">INCOMING</span></div>
         <div class="xp-ro">Manufacturing Test Intern</div>
-        <p>Joining Base Power this fall on the manufacturing test side. <span class="edit">— details to come.</span></p>
+        <p><span class="edit">Fill in one sentence about what you'll be doing here.</span></p>
       </div>
     </div>
 
@@ -327,7 +338,7 @@ footer{border-top:1px solid var(--line);padding:26px 0}
       <div>
         <div class="xp-co">Electrans Technologies</div>
         <div class="xp-ro">Mechatronics Intern</div>
-        <p>Built a full-stack QA vision station — a 3D-printed optomechanical fixture and a Python/OpenCV pipeline on a Raspberry&nbsp;Pi&nbsp;5 — that cut cycle times <b>74%</b>. Led the 0-to-1 design of a precision locating tool with a self-locking lead-screw drive and inductive sensing for corrosive environments, and validated a weldment fixture to <b>1537&nbsp;Hz</b> through modal analysis and topology optimization for 6g random-vibration testing.</p>
+        <p><span class="edit">Fill in one sentence about your role and impact here.</span></p>
       </div>
     </div>
 
@@ -336,7 +347,7 @@ footer{border-top:1px solid var(--line);padding:26px 0}
       <div>
         <div class="xp-co">ATS Life Sciences Systems</div>
         <div class="xp-ro">Mechanical Designer</div>
-        <p>Led proof-of-principle for an automated canister-handling system — a compliant vacuum end-effector that cut surface damage <b>90%+</b> versus rigid pickup. Designed a servo-driven, thrubeam-sensed tray-alignment system (<b>+9%</b> throughput) and re-laid cell conveyance for <b>$800K</b> in material and labor savings.</p>
+        <p><span class="edit">Fill in one sentence about your role and impact here.</span></p>
       </div>
     </div>
 
@@ -345,7 +356,7 @@ footer{border-top:1px solid var(--line);padding:26px 0}
       <div>
         <div class="xp-co">Electrium Mobility</div>
         <div class="xp-ro">Project Lead</div>
-        <p>Led the electromechanical design and integration of a custom OneWheel inside a <b>$1000</b> budget — welded frame, sheet metal, and a spot-welded 16S2P Li-ion pack with BMS feeding a 600&nbsp;W BLDC motor.</p>
+        <p><span class="edit">Fill in one sentence about your role and impact here.</span></p>
       </div>
     </div>
 
@@ -354,7 +365,7 @@ footer{border-top:1px solid var(--line);padding:26px 0}
       <div>
         <div class="xp-co">PWO Canada</div>
         <div class="xp-ro">Process Engineering</div>
-        <p>Designed sensor-integrated tooling for automated cross-car-beam welding cells in SolidEdge — anti-spatter shielding and thermal copper coatings dropped scrap <b>33%</b>. RCA and time studies cut cycle time another <b>12%</b>.</p>
+        <p><span class="edit">Fill in one sentence about your role and impact here.</span></p>
       </div>
     </div>
 
@@ -363,7 +374,7 @@ footer{border-top:1px solid var(--line);padding:26px 0}
       <div>
         <div class="xp-co">Linamar</div>
         <div class="xp-ro">Manufacturing Engineering</div>
-        <p>Redesigned pneumatic gripper fingers with DFM/A for <b>$3000</b> in savings, built sheet-metal broaching tooling that shortened cycle time <b>32%</b>, and coded an Excel VBA planner that cut shift planning <b>70%</b>.</p>
+        <p><span class="edit">Fill in one sentence about your role and impact here.</span></p>
       </div>
     </div>
   </div>
@@ -384,6 +395,11 @@ footer{border-top:1px solid var(--line);padding:26px 0}
       <h3>Image Logger</h3>
       <p>A machine-vision QA station for connector pins, pneumatic fittings, and sheet-metal defects. Dual cameras with active thermal management, a calibrated OpenCV pipeline, and a detection engine built on phase correlation, radial symmetry, NCC, and RANSAC.</p>
       <div class="tags"><span>Python</span><span>OpenCV</span><span>Raspberry Pi 5</span><span>3D Printing</span></div>
+      <button class="pj-toggle" aria-expanded="false"><span class="pj-lbl">EXPAND</span> <span class="arr">▾</span></button>
+      <div class="pj-panel">
+        <div class="pj-img"><div class="img-ph">[ Add project image ]<br>Replace this div with an &lt;img&gt; tag</div></div>
+        <p class="pj-pdesc"><span class="edit">Add a deeper description — what you built, how it works, and what you learned.</span></p>
+      </div>
     </article>
 
     <article class="pj reveal">
@@ -392,6 +408,11 @@ footer{border-top:1px solid var(--line);padding:26px 0}
       <h3>Universal Trailer Tool</h3>
       <p>A mechatronic tool that marks a hole pattern on trailer faces, robust to damage and corrosive yards. Non-backdriveable 7° lead-screw drive, over-center kingpin capture with torsion springs, and inductive sensing on 18V tool batteries.</p>
       <div class="tags"><span>SolidWorks</span><span>Lead Screw</span><span>Inductive Sensing</span><span>304 SS</span></div>
+      <button class="pj-toggle" aria-expanded="false"><span class="pj-lbl">EXPAND</span> <span class="arr">▾</span></button>
+      <div class="pj-panel">
+        <div class="pj-img"><div class="img-ph">[ Add project image ]<br>Replace this div with an &lt;img&gt; tag</div></div>
+        <p class="pj-pdesc"><span class="edit">Add a deeper description — what you built, how it works, and what you learned.</span></p>
+      </div>
     </article>
 
     <article class="pj reveal">
@@ -400,6 +421,11 @@ footer{border-top:1px solid var(--line);padding:26px 0}
       <h3>Custom OneWheel</h3>
       <p>Designed and integrated a OneWheel from scratch — SolidWorks weldments and sheet metal, machined aluminum and 3D-printed housings, and a spot-welded 16S2P pack with BMS, VESC, and dynamic LED underglow.</p>
       <div class="tags"><span>SolidWorks</span><span>Battery / BMS</span><span>Spot Welding</span><span>Machining</span></div>
+      <button class="pj-toggle" aria-expanded="false"><span class="pj-lbl">EXPAND</span> <span class="arr">▾</span></button>
+      <div class="pj-panel">
+        <div class="pj-img"><div class="img-ph">[ Add project image ]<br>Replace this div with an &lt;img&gt; tag</div></div>
+        <p class="pj-pdesc"><span class="edit">Add a deeper description — what you built, how it works, and what you learned.</span></p>
+      </div>
     </article>
 
     <article class="pj reveal">
@@ -408,14 +434,43 @@ footer{border-top:1px solid var(--line);padding:26px 0}
       <h3>Digital Caliper</h3>
       <p>An ESP32 prototype that emulates a digital caliper — a slide potentiometer read through the 12-bit ADC, mapped to millimetres with a calibration curve, and rendered live on an SSD1306 OLED over I²C.</p>
       <div class="tags"><span>ESP32</span><span>C++</span><span>I²C</span><span>Embedded</span></div>
+      <button class="pj-toggle" aria-expanded="false"><span class="pj-lbl">EXPAND</span> <span class="arr">▾</span></button>
+      <div class="pj-panel">
+        <div class="pj-img"><div class="img-ph">[ Add project image ]<br>Replace this div with an &lt;img&gt; tag</div></div>
+        <p class="pj-pdesc"><span class="edit">Add a deeper description — what you built, how it works, and what you learned.</span></p>
+      </div>
     </article>
   </div>
 
   <div class="pj-more reveal">
-    <div class="pm"><span class="pm-n">Maze Runner</span><span class="pm-d">DFS search-and-rescue robot · 67% success · C, sensors</span></div>
-    <div class="pm"><span class="pm-n">Suspension Mount</span><span class="pm-d">FEA-driven scooter mount · FOS &gt; 2 · 10ga CRS</span></div>
-    <div class="pm"><span class="pm-n">Spring-Loaded Part Clamp</span><span class="pm-d">Passive OD clamp · &lt;3g hold · FDM prototyped</span></div>
-    <div class="pm"><span class="pm-n">4-Pin Gauge Mount</span><span class="pm-d">3-axis adjustable jig · −22% cycle, −50% error</span></div>
+    <div class="pm">
+      <div class="pm-header"><span class="pm-n">Maze Runner</span><span class="pm-d">DFS search-and-rescue robot · 67% success · C, sensors</span><span class="pm-arr">▾</span></div>
+      <div class="pm-panel"><div class="pm-inner">
+        <div class="pj-img"><div class="img-ph">[ Add project image ]</div></div>
+        <p class="pj-pdesc"><span class="edit">Add a description of this project.</span></p>
+      </div></div>
+    </div>
+    <div class="pm">
+      <div class="pm-header"><span class="pm-n">Suspension Mount</span><span class="pm-d">FEA-driven scooter mount · FOS &gt; 2 · 10ga CRS</span><span class="pm-arr">▾</span></div>
+      <div class="pm-panel"><div class="pm-inner">
+        <div class="pj-img"><div class="img-ph">[ Add project image ]</div></div>
+        <p class="pj-pdesc"><span class="edit">Add a description of this project.</span></p>
+      </div></div>
+    </div>
+    <div class="pm">
+      <div class="pm-header"><span class="pm-n">Spring-Loaded Part Clamp</span><span class="pm-d">Passive OD clamp · &lt;3g hold · FDM prototyped</span><span class="pm-arr">▾</span></div>
+      <div class="pm-panel"><div class="pm-inner">
+        <div class="pj-img"><div class="img-ph">[ Add project image ]</div></div>
+        <p class="pj-pdesc"><span class="edit">Add a description of this project.</span></p>
+      </div></div>
+    </div>
+    <div class="pm">
+      <div class="pm-header"><span class="pm-n">4-Pin Gauge Mount</span><span class="pm-d">3-axis adjustable jig · −22% cycle, −50% error</span><span class="pm-arr">▾</span></div>
+      <div class="pm-panel"><div class="pm-inner">
+        <div class="pj-img"><div class="img-ph">[ Add project image ]</div></div>
+        <p class="pj-pdesc"><span class="edit">Add a description of this project.</span></p>
+      </div></div>
+    </div>
   </div>
 </section>
 
@@ -460,13 +515,11 @@ footer{border-top:1px solid var(--line);padding:26px 0}
   <div class="sheet-head reveal" style="margin-top:60px;margin-bottom:28px">
     <span class="sheet-id">A.03.1</span>
     <h2 class="sheet-title" style="font-size:clamp(22px,3vw,30px)">Awards</h2>
-    <span class="sheet-note">edit to your real honours</span>
   </div>
-  <!-- EDIT: replace with your real awards (scholarships, Dean's list, competition placements) -->
   <div class="awards">
-    <div class="award reveal"><div class="yr">2023 — 2026</div><div class="nm">Term Distinction</div><div class="ds"><span class="edit">Placeholder — e.g. Dean's Honours List. Replace with your real award.</span></div></div>
-    <div class="award reveal"><div class="yr">2023</div><div class="nm">Entrance Scholarship</div><div class="ds"><span class="edit">Placeholder — add the scholarship name, or remove this card.</span></div></div>
-    <div class="award reveal"><div class="yr">YYYY</div><div class="nm">Design Competition</div><div class="ds"><span class="edit">Placeholder — add a competition placement, or remove this card.</span></div></div>
+    <div class="award"><div class="yr">2023 — 2026</div><div class="nm">Term Distinction</div><div class="ds"><span class="edit">Add a short note about this award.</span></div></div>
+    <div class="award"><div class="yr">2023</div><div class="nm">Entrance Scholarship</div><div class="ds"><span class="edit">Add a short note about this scholarship.</span></div></div>
+    <div class="award"><div class="yr">YYYY</div><div class="nm">Design Competition</div><div class="ds"><span class="edit">Add a competition placement, or replace this card.</span></div></div>
   </div>
 </section>
 
@@ -485,15 +538,15 @@ footer{border-top:1px solid var(--line);padding:26px 0}
     <p class="block-sub">Projects, sends, and the occasional spectacular fall. Tap a clip for sound.</p>
     <div class="reels">
       <div class="reel">
-        <video src="media/climb-1.mp4" poster="media/climb-1.jpg" muted loop playsinline preload="metadata"></video>
+        <video src="climb-1.mp4" poster="climb-1.jpg" muted loop playsinline preload="metadata"></video>
         <div class="rcap"><span>// send 01</span><span class="snd" aria-label="Toggle sound">♪</span></div>
       </div>
       <div class="reel">
-        <video src="media/climb-2.mp4" poster="media/climb-2.jpg" muted loop playsinline preload="metadata"></video>
+        <video src="climb-2.mp4" poster="climb-2.jpg" muted loop playsinline preload="metadata"></video>
         <div class="rcap"><span>// send 02</span><span class="snd" aria-label="Toggle sound">♪</span></div>
       </div>
       <div class="reel">
-        <video src="media/climb-3.mp4" poster="media/climb-3.jpg" muted loop playsinline preload="metadata"></video>
+        <video src="climb-3.mp4" poster="climb-3.jpg" muted loop playsinline preload="metadata"></video>
         <div class="rcap"><span>// send 03</span><span class="snd" aria-label="Toggle sound">♪</span></div>
       </div>
     </div>
@@ -504,7 +557,6 @@ footer{border-top:1px solid var(--line);padding:26px 0}
     <div class="block-kick">Beli <span class="ln"></span></div>
     <div class="block-title">Food, Ranked</div>
     <p class="block-sub">An ongoing, deeply scientific leaderboard of where to eat.</p>
-    <!-- EDIT: replace these rows with your real Beli top spots. -->
     <div class="beli">
       <div class="beli-row"><span class="rk">1</span><div><div class="pl">Restaurant Name</div><div class="ct">Neighbourhood, City</div></div><span class="sc">9.8</span></div>
       <div class="beli-row"><span class="rk">2</span><div><div class="pl">Restaurant Name</div><div class="ct">Neighbourhood, City</div></div><span class="sc">9.5</span></div>
@@ -520,12 +572,9 @@ footer{border-top:1px solid var(--line);padding:26px 0}
     <div class="block-title">In the Headphones</div>
     <p class="block-sub">What's playing while I'm modeling parts or warming up on the wall.</p>
     <div class="music-grid">
-      <!-- EDIT: paste a Spotify playlist embed. In Spotify: Share → Embed playlist → copy the iframe and replace the block below.
-           Example: <iframe style="height:352px" src="https://open.spotify.com/embed/playlist/PLAYLIST_ID?theme=0" allow="encrypted-media" loading="lazy"></iframe> -->
       <div class="embed-slot">
-        <div class="es"><b>Add your Spotify playlist here.</b><br>Share → Embed playlist → paste the iframe into this slot (see the comment in the code).</div>
+        <iframe src="https://open.spotify.com/embed/playlist/3bd5Ddv1iiFweep4hHEPPJ?utm_source=generator&theme=0" height="352" allowfullscreen="" allow="autoplay; clipboard-write; encrypted-media; fullscreen; picture-in-picture" loading="lazy"></iframe>
       </div>
-      <!-- EDIT: swap these for what you're actually listening to -->
       <div class="rotation">
         <div class="rt-h">On Rotation</div>
         <div class="rot-row"><span class="ar">Artist / Album</span><span class="al">genre</span></div>
@@ -546,19 +595,19 @@ footer{border-top:1px solid var(--line);padding:26px 0}
         <div class="rt">Book</div>
         <h4>Crazy Love</h4>
         <div class="au">Francis Chan</div>
-        <p>A bracing push against lukewarm faith — short, direct, and hard to read passively. It reframes what it actually looks like to take God seriously.</p>
+        <p><span class="edit">Write your own thoughts on this book here.</span></p>
       </div>
       <div class="rec reveal">
         <div class="rt">Book</div>
         <h4>The Great Divorce</h4>
         <div class="au">C. S. Lewis</div>
-        <p>A dream-vision of a bus ride from hell to heaven. Lewis turns abstract questions about grace and choice into something vivid and unsettling.</p>
+        <p><span class="edit">Write your own thoughts on this book here.</span></p>
       </div>
       <div class="rec reveal">
         <div class="rt">Add one</div>
         <h4>Your Next Pick</h4>
         <div class="au">Author</div>
-        <p><span class="edit">Placeholder — drop in a third recommendation, or delete this card to keep two.</span></p>
+        <p><span class="edit">Add a third recommendation, or delete this card.</span></p>
       </div>
     </div>
   </div>
@@ -573,7 +622,6 @@ footer{border-top:1px solid var(--line);padding:26px 0}
       <a href="mailto:zachary.barandino@uwaterloo.ca">zachary.barandino@uwaterloo.ca<span></span></a>
       <a href="https://www.linkedin.com/in/zachary-barandino/" target="_blank" rel="noopener">LinkedIn ↗<span></span></a>
     </div>
-    <!-- Note: phone number is intentionally left off the public page to reduce spam. Add it here if you want it visible. -->
   </div>
 </section>
 
@@ -585,51 +633,68 @@ footer{border-top:1px solid var(--line);padding:26px 0}
 </footer>
 
 <script>
-  (function(){
-    var reduce = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+(function(){
+  var reduce = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
 
-    // Scroll reveal
-    var els = document.querySelectorAll('.reveal');
-    if(reduce || !('IntersectionObserver' in window)){
-      els.forEach(function(e){e.classList.add('in')});
-    } else {
-      document.querySelectorAll('.pj-grid, .awards, .recs, .reels, .xp').forEach(function(g){
-        g.querySelectorAll('.reveal').forEach(function(el,i){ el.dataset.d = i*60; });
-      });
-      var io = new IntersectionObserver(function(entries){
-        entries.forEach(function(en){
-          if(en.isIntersecting){
-            en.target.style.transitionDelay = (en.target.dataset.d || 0) + 'ms';
-            en.target.classList.add('in');
-            io.unobserve(en.target);
-          }
-        });
-      },{threshold:.12, rootMargin:'0px 0px -8% 0px'});
-      els.forEach(function(e){io.observe(e)});
-    }
-
-    // Climbing reels: play only when in view; respect reduced motion; tap to toggle sound
-    var vids = document.querySelectorAll('.reel video');
-    if(reduce){
-      vids.forEach(function(v){ v.setAttribute('controls',''); });
-    } else if('IntersectionObserver' in window){
-      var vio = new IntersectionObserver(function(entries){
-        entries.forEach(function(en){
-          var v = en.target;
-          if(en.isIntersecting){ v.play().catch(function(){}); }
-          else { v.pause(); }
-        });
-      },{threshold:.4});
-      vids.forEach(function(v){ vio.observe(v); });
-    }
-    // tap clip (or the ♪) to toggle sound
-    document.querySelectorAll('.reel').forEach(function(reel){
-      var v = reel.querySelector('video');
-      var btn = reel.querySelector('.snd');
-      function toggle(){ v.muted = !v.muted; if(!v.muted){ v.play().catch(function(){}); } btn.style.background = v.muted ? '' : 'rgba(255,255,255,.3)'; }
-      reel.addEventListener('click', toggle);
+  // Scroll reveal
+  var els = document.querySelectorAll('.reveal');
+  if(reduce || !('IntersectionObserver' in window)){
+    els.forEach(function(e){e.classList.add('in')});
+  } else {
+    document.querySelectorAll('.pj-grid, .awards, .recs, .reels, .xp').forEach(function(g){
+      g.querySelectorAll('.reveal').forEach(function(el,i){ el.dataset.d = i*60; });
     });
-  })();
+    var io = new IntersectionObserver(function(entries){
+      entries.forEach(function(en){
+        if(en.isIntersecting){
+          en.target.style.transitionDelay = (en.target.dataset.d || 0) + 'ms';
+          en.target.classList.add('in');
+          io.unobserve(en.target);
+        }
+      });
+    },{threshold:.12, rootMargin:'0px 0px -8% 0px'});
+    els.forEach(function(e){io.observe(e)});
+  }
+
+  // Climbing reels: play only when in view; tap to toggle sound
+  var vids = document.querySelectorAll('.reel video');
+  if(reduce){
+    vids.forEach(function(v){ v.setAttribute('controls',''); });
+  } else if('IntersectionObserver' in window){
+    var vio = new IntersectionObserver(function(entries){
+      entries.forEach(function(en){
+        var v = en.target;
+        if(en.isIntersecting){ v.play().catch(function(){}); }
+        else { v.pause(); }
+      });
+    },{threshold:.4});
+    vids.forEach(function(v){ vio.observe(v); });
+  }
+  document.querySelectorAll('.reel').forEach(function(reel){
+    var v = reel.querySelector('video');
+    var btn = reel.querySelector('.snd');
+    function toggle(){ v.muted = !v.muted; if(!v.muted){ v.play().catch(function(){}); } btn.style.background = v.muted ? '' : 'rgba(255,255,255,.3)'; }
+    reel.addEventListener('click', toggle);
+  });
+
+  // Expandable project cards
+  document.querySelectorAll('.pj-toggle').forEach(function(btn){
+    btn.addEventListener('click', function(e){
+      e.stopPropagation();
+      var pj = btn.closest('.pj');
+      var isOpen = pj.classList.toggle('open');
+      btn.setAttribute('aria-expanded', String(isOpen));
+      btn.querySelector('.pj-lbl').textContent = isOpen ? 'COLLAPSE' : 'EXPAND';
+    });
+  });
+
+  // Expandable minor project rows
+  document.querySelectorAll('.pm-header').forEach(function(header){
+    header.addEventListener('click', function(){
+      header.closest('.pm').classList.toggle('open');
+    });
+  });
+})();
 </script>
 </body>
 </html>
